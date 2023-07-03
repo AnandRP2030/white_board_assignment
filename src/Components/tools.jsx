@@ -13,12 +13,12 @@ const Tools = (props) => {
     setEraseActive,
     eraserSize,
     setEraserSize,
-    canvas
+    canvas,
   } = props;
 
   const activateDrawingMode = () => {
     canvas.current.isDrawingMode = true;
-  }
+  };
 
   const handleBrushColor = (newColor) => {
     setActiveBrushColor(newColor);
@@ -31,6 +31,7 @@ const Tools = (props) => {
   };
 
   const toggleEraser = () => {
+    canvas.current.isDrawingMode = true;
     setEraseActive(!eraseActive);
   };
 
@@ -38,8 +39,6 @@ const Tools = (props) => {
     const newSize = parseInt(e.target.value, 10);
     setEraserSize(newSize);
   };
-
-  
 
   return (
     <>
@@ -110,7 +109,6 @@ const Tools = (props) => {
             />
           </button>
         </div>
-
         <button
           className="eraserBtn"
           style={{ opacity: !eraseActive ? 0.7 : 1 }}

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { fabric } from "fabric";
 import Tools from "./Components/tools";
 import "./App.css";
-import NewPageBtn from "./Components/newPageBtn";
 import Shapes from "./Components/shape";
 
 function App() {
@@ -10,6 +9,7 @@ function App() {
   const [brushSize, setBrushSize] = useState(5);
   const [eraseActive, setEraseActive] = useState(false);
   const [eraserSize, setEraserSize] = useState(5);
+  const [zoomOn, setZoomOn] = useState(false);
   const canvasRef = useRef(null);
   const canvas = useRef(null);
   const [totalPages, setTotalPages] = useState([{ pageNo: 1 }]);
@@ -22,7 +22,14 @@ function App() {
     canvas.current.freeDrawingBrush.color = activeBrushColor;
     canvas.current.freeDrawingBrush.width = brushSize;
 
-    canvas.current.on("mouse:wheel", function (opt) {
+    return () => {
+      canvas.current.dispose();
+    };
+  }, [totalPages]);
+
+  const zoomToggle = () => {
+    console.log("zm", zoomOn);
+    const zoomHandler = (opt) => {
       var delta = opt.e.deltaY;
       var zoom = canvas.current.getZoom();
       zoom *= 0.999 ** delta;
@@ -31,12 +38,16 @@ function App() {
       canvas.current.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
       opt.e.preventDefault();
       opt.e.stopPropagation();
-    });
-
-    return () => {
-      canvas.current.dispose();
     };
-  }, [totalPages]);
+
+    if (zoomOn) {
+      canvas.current.off("mouse:wheel", zoomHandler);
+      setZoomOn(false);
+    } else {
+      canvas.current.on("mouse:wheel", zoomHandler);
+      setZoomOn(true);
+    }
+  };
 
   useEffect(() => {
     if (canvas.current) {
@@ -55,8 +66,6 @@ function App() {
     setTotalPages((prevPages) => [...prevPages, newObj]);
   };
 
- 
-
   return (
     <div style={{ width: "100%" }}>
       <Tools
@@ -70,11 +79,12 @@ function App() {
         setEraserSize={setEraserSize}
         canvas={canvas}
       />
+      <Shapes activeColor={activeBrushColor} canvas={canvas} />
+
       <div className="pageNoContainer">
         <button onClick={createNewPage}>New Page</button>
+        <button onClick={zoomToggle}> Zoom On</button>
       </div>
-      <Shapes canvas={canvas}/>
-      
 
       <canvas id="canvas" ref={canvasRef} />
     </div>

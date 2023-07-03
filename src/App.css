@@ -13,13 +13,22 @@ body {
   display: flex;
 }
 
-
-.pageNoContainer > button {
+.pageNoContainer > button:first-child {
   margin-left: 20px;
   background-color: black;
   color: white;
-  width: 200px;
+  width: 100px;
   height: 34px;
   border-radius: 5px;
   cursor: pointer;
+}
+.pageNoContainer > button {
+  margin-left: 20px;
+  background-color: red;
+  color: white;
+  width: 100px;
+  height: 34px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
 }
