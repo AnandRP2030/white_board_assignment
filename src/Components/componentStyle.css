@@ -1,0 +1,34 @@
+.brushColorContainer {
+  display: flex;
+  margin-left: 100px;
+}
+.brushColorContainer > button {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  margin-top: 20px;
+  border: none;
+}
+
+.blackBrush {
+  background-color: black;
+  color: white;
+}
+.redBrush {
+  background-color: red;
+  color: white;
+}
+.blueBrush {
+  background-color: blue;
+  color: white;
+}
+.greenBrush {
+  background-color: green;
+  color: white;
+}
+
+.yellowBrush{
+  background-color: yellow;
+  color: white;
+}
