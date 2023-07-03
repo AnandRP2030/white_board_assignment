@@ -3,6 +3,8 @@
 
 The Whiteboard App is a web application that allows students to freely draw using different colors and pen sizes, as well as erase their drawings. It is built using React, HTML, CSS, and JavaScript, incorporating the Fabric.js library for enhanced canvas functionality.
 
+## Live: https://whiteboard-vidyalai-assignment.netlify.app/
+
 <img src="./asset/images/vidyalai_ss.jpg" alt="app">
 
 ## Features
