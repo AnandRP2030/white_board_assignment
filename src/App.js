@@ -11,6 +11,8 @@ function App() {
   const canvasRef = useRef(null);
   const canvas = useRef(null);
 
+  
+
   useEffect(() => {
     canvas.current = new fabric.Canvas(canvasRef.current);
     canvas.current.setHeight(window.innerHeight);
