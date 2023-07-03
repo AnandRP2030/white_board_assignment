@@ -1,7 +1,14 @@
 .brushColorContainer {
   display: flex;
   margin-left: 100px;
+  background-color: gray;
 }
+.brushColorContainer > .penTool {
+  color: white;
+  width: 40px;
+  height: 40px;
+}
+
 .brushColorContainer > button {
   border-radius: 50%;
   width: 30px;
@@ -28,7 +35,7 @@
   color: white;
 }
 
-.yellowBrush{
+.yellowBrush {
   background-color: yellow;
   color: white;
 }

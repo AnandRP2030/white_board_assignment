@@ -1,38 +1,41 @@
 import { useEffect, useState, useRef } from "react";
 import { fabric } from "fabric";
-import BrushColor from "./Components/BrushColor";
+import Tools from "./Components/tools";
 import "./App.css";
 
 function App() {
   const [activeBrushColor, setActiveBrushColor] = useState("#000000");
+  const [brushSize, setBrushSize] = useState(5);
   const canvasRef = useRef(null);
+  const canvas = useRef(null);
 
   useEffect(() => {
-    const canvas = new fabric.Canvas(canvasRef.current);
-    canvas.setHeight(window.innerHeight);
-    canvas.setWidth(window.innerWidth);
-    canvas.isDrawingMode = true;
-    canvas.freeDrawingBrush.width = 3;
-    canvas.freeDrawingBrush.color = activeBrushColor;
-
-    canvas.on("path:created", function (options) {
-      const path = options.path;
-      path.set("stroke", activeBrushColor);
-
-      canvas.requestRenderAll();
-    });
+    canvas.current = new fabric.Canvas(canvasRef.current);
+    canvas.current.setHeight(window.innerHeight);
+    canvas.current.setWidth(window.innerWidth);
+    canvas.current.isDrawingMode = true;
 
     return () => {
-      canvas.dispose(); 
+      canvas.current.dispose();
     };
-  }, [activeBrushColor]);
+  }, []);
 
-  console.log(activeBrushColor);
+  useEffect(() => {
+    if (canvas.current) {
+      canvas.current.freeDrawingBrush.color = activeBrushColor;
+    }
+    if (canvas.current) {
+      canvas.current.freeDrawingBrush.width = brushSize;
+    }
+  }, [activeBrushColor, brushSize]);
+
   return (
     <>
-      <BrushColor
+      <Tools
         setActiveBrushColor={setActiveBrushColor}
         activeBrushColor={activeBrushColor}
+        setBrushSize={setBrushSize}
+        brushSize={brushSize}
       />
       <canvas id="canvas" ref={canvasRef} />;
     </>
