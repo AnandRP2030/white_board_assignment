@@ -3,6 +3,7 @@ import { fabric } from "fabric";
 import Tools from "./Components/tools";
 import "./App.css";
 import NewPageBtn from "./Components/newPageBtn";
+import Shapes from "./Components/shape";
 
 function App() {
   const [activeBrushColor, setActiveBrushColor] = useState("#000000");
@@ -20,12 +21,23 @@ function App() {
     canvas.current.isDrawingMode = true;
     canvas.current.freeDrawingBrush.color = activeBrushColor;
     canvas.current.freeDrawingBrush.width = brushSize;
+
+    canvas.current.on("mouse:wheel", function (opt) {
+      var delta = opt.e.deltaY;
+      var zoom = canvas.current.getZoom();
+      zoom *= 0.999 ** delta;
+      if (zoom > 20) zoom = 20;
+      if (zoom < 0.01) zoom = 0.01;
+      canvas.current.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+      opt.e.preventDefault();
+      opt.e.stopPropagation();
+    });
+
     return () => {
       canvas.current.dispose();
     };
   }, [totalPages]);
 
-  console.log(brushSize,' size')
   useEffect(() => {
     if (canvas.current) {
       canvas.current.freeDrawingBrush.color = activeBrushColor;
@@ -43,9 +55,10 @@ function App() {
     setTotalPages((prevPages) => [...prevPages, newObj]);
   };
 
+ 
 
   return (
-    <div style={{width: '800px'}}>
+    <div style={{ width: "100%" }}>
       <Tools
         setActiveBrushColor={setActiveBrushColor}
         activeBrushColor={activeBrushColor}
@@ -55,16 +68,15 @@ function App() {
         setEraseActive={setEraseActive}
         eraserSize={eraserSize}
         setEraserSize={setEraserSize}
+        canvas={canvas}
       />
-       <div className="pageNoContainer">
-        {/* {totalPages.map((elem, idx) => {
-          return <NewPageBtn key={idx} pageNo={elem.pageNo} />;
-        })} */}
-        <button  onClick={createNewPage}>New Page</button>
+      <div className="pageNoContainer">
+        <button onClick={createNewPage}>New Page</button>
       </div>
-      <canvas id="canvas" ref={canvasRef} />
+      <Shapes canvas={canvas}/>
+      
 
-     
+      <canvas id="canvas" ref={canvasRef} />
     </div>
   );
 }

@@ -13,7 +13,12 @@ const Tools = (props) => {
     setEraseActive,
     eraserSize,
     setEraserSize,
+    canvas
   } = props;
+
+  const activateDrawingMode = () => {
+    canvas.current.isDrawingMode = true;
+  }
 
   const handleBrushColor = (newColor) => {
     setActiveBrushColor(newColor);
@@ -34,10 +39,13 @@ const Tools = (props) => {
     setEraserSize(newSize);
   };
 
+  
+
   return (
     <>
       <div className="toolsContainer">
         <button
+          onClick={activateDrawingMode}
           className="penTool"
           style={{ backgroundColor: activeBrushColor }}
         >

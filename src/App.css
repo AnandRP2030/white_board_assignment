@@ -1,24 +1,25 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    padding: 1%;
-    box-sizing: border-box;
+body {
+  padding: 1%;
+  box-sizing: border-box;
 }
 
-.pageNoContainer {
-    display: flex;
-
+.drawingBox {
+  display: flex;
 }
-.pageNoContainer>button{
-    margin-left: 20px;
-    background-color: black;
-    color: white;
-    width: 200px;
-    height: 34px;
-    border-radius: 5px;
-    cursor: pointer;
+
+
+.pageNoContainer > button {
+  margin-left: 20px;
+  background-color: black;
+  color: white;
+  width: 200px;
+  height: 34px;
+  border-radius: 5px;
+  cursor: pointer;
 }
